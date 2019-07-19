@@ -44,24 +44,33 @@
              {{post.last_reply_at | formatDate }}
            </span>
          </li>
+         <li>
+<!--           分页-->
+           <pagination @handleList="renderList"></pagination>
+         </li>
        </ul>
      </div>
    </div>
 </template>
 <script>
+import pagination from './Pagination'
 export default {
   name: 'PostList',
   data () {
     return {
       isLoading: false,
-      posts: []
+      posts: [],
+      postpage: 1
     }
+  },
+  components: {
+    pagination
   },
   methods: {
     getData () {
       this.$http.get('https://cnodejs.org/api/v1/topics', {
         params: {
-          page: 1,
+          page: this.postpage,
           limit: 20
         }
       })
@@ -75,6 +84,10 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    renderList (value) {
+      this.postpage = value
+      this.getData()
     }
   },
   beforeMount () {
