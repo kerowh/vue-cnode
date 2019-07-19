@@ -8,11 +8,11 @@
      <div class="posts">
        <ul>
          <div class="toobar">
-           <span>全部</span>
-           <span>精华</span>
-           <span>分享</span>
-           <span>问答</span>
-           <span>招聘</span>
+           <span @click="all">全部</span>
+           <span @click="good">精华</span>
+           <span @click="share">分享</span>
+           <span @click="ask">问答</span>
+           <span @click="job">招聘</span>
          </div>
          <li v-for="post in posts" :key="post.value">
             <!--头像-->
@@ -60,6 +60,7 @@ export default {
     return {
       isLoading: false,
       posts: [],
+      currentTab: '',
       postpage: 1
     }
   },
@@ -67,6 +68,44 @@ export default {
     pagination
   },
   methods: {
+    all () {
+      this.getData()
+    },
+    good () {
+      this.currentTab = 'good'
+      this.getTabDate()
+    },
+    share () {
+      this.currentTab = 'share'
+      this.getTabDate()
+    },
+    job () {
+      this.currentTab = 'job'
+      this.getTabDate()
+    },
+    ask () {
+      this.currentTab = 'ask'
+      this.getTabDate()
+    },
+    getTabDate () {
+      this.$http.get('https://cnodejs.org/api/v1/topics', {
+        params: {
+          page: this.postpage,
+          limit: 20,
+          tab: this.currentTab
+        }
+      })
+        .then(res => {
+          // eslint-disable-next-line handle-callback-err
+          // 数据加载成功之后，就把加载动画去掉
+          this.isLoading = false
+          this.posts = res.data.data
+        })
+        // 打印错误信息
+        .catch(error => {
+          console.log(error)
+        })
+    },
     getData () {
       this.$http.get('https://cnodejs.org/api/v1/topics', {
         params: {
