@@ -71,6 +71,11 @@ export default {
         })
     }
   },
+  watch: {
+    '$route' (to, from) {
+      this.getArticleData()
+    }
+  },
   beforeMount () {
     // eslint-disable-next-line no-unused-expressions
     this.isLoading = true // 加载数据成功之前加载动画
