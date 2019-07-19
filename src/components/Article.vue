@@ -23,8 +23,22 @@
         <div class="topbar">回复</div>
         <div v-for="(reply,index)  in post.replies" class="replySec" :key="reply.value">
           <div class="replyUp">
-            <img :src="reply.author.avatar_url" alt="">
-            <span>{{reply.author.loginname}}</span>
+            <router-link :to="{
+            name : 'user_info',
+            params:{
+            name:reply.author.loginname
+            }
+            }">
+              <img :src="reply.author.avatar_url">
+            </router-link>
+            <router-link :to="{
+            name : 'user_info',
+            params:{
+            name:reply.author.loginname
+            }
+            }">
+              <span>{{reply.author.loginname}}</span>
+            </router-link>
             <span>{{index+1}}楼</span>
             <span v-if="reply.ups.length>0" >☝ {{reply.ups.length}}</span>
             <span v-else></span>
