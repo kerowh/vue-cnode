@@ -30,4 +30,7 @@ export default {
   #app{
     background-color: #e1e1e1;
   }
+  html{
+    background-color: #e1e1e1;
+  }
 </style>
