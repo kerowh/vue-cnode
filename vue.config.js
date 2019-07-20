@@ -7,5 +7,7 @@
    devServer: {
      port: 8000,
    },
-   publicPath: process.env.NODE_ENV === "production" ? "/vue-cnode" : "/"
+   publicPath: process.env.NODE_ENV === 'production'
+     ? '/vue-cnode/'
+     : '/'
  };
